@@ -16,6 +16,7 @@ info/ # 存放可能对项目开发有帮助的一些文档
 picture/ # 存放.md文件中用到的图片
 development.md # 开发日志
 README.md # 项目介绍
+usage.md # 教程
 requirements.txt # 存放需要安装的Python第三方库及其版本要求
 ```
 
@@ -27,9 +28,10 @@ $ git submodule update --init --recursive # 拉取子模块
 ```
 
 如子模块需要更新，则需要执行以下指令：
+
 ```bash
 $ cd LaTeX-templates
-$ git pull
+$ git pull  
 ```
 
 
