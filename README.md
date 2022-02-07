@@ -43,6 +43,8 @@ $ git pull
 
   * `re` Python处理正则表达式的一个库。因为这个项目需要大量处理文本的方法，所以我感觉大概率会用到这个库。在线测试正则表达式可以用[https://regex101.com/](https://regex101.com/)
 
+  * `os/sys` Python与操作系统交互的两个库，例如创建文件，列举文件等。
+
   * Python文件读写的相关机制
 
 * LaTeX相关

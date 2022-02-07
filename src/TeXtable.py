@@ -39,11 +39,13 @@ def tex_table(row: int, column: int, style: Union[int, str] = 1) -> str:
     # generating strings
     table_string = ''
 
-    table_position_string = r'{c'
-    for i in range(column - 1):
+    table_position_string = r'{'
+    for i in range(column):
         if (_style == 2):
             table_position_string += '|'
         table_position_string += 'c'
+    if(_style == 2):
+        table_position_string += r'|'
     table_position_string += r'}'
 
     table_row_string = '  '
