@@ -83,7 +83,8 @@ def tex_table(row: int, column: int, style: Union[int, str] = 1) -> str:
         table_string += H_LINE
     elif (_style == 4):
         table_string += BOTTOM_RULE
-    table_string + '\n'
+    table_string += END_COMMAND
+    table_string += '\n'
 
     assert typeguard.check_return_type(table_string)
     return table_string
