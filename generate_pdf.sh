@@ -28,7 +28,7 @@ do
     ${LaTeX_engine} ${tmp_file} 1>/dev/null
 done
 
-rm *.log *.aux *.png *.jpg *.pdf
+rm *.log *.aux *.png *.jpg
 for file in `find . -maxdepth 1 -name "*.pdf" `
 do
     if [ ! -e "pdf/${file}" ]; then
