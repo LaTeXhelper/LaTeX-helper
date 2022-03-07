@@ -1,0 +1,14 @@
+from utils.fileio import *
+from typing import List
+
+def tex_add(name: str,
+            template_path: str = './LaTeX-templates/',
+            src_path: str = '.'):
+    assert typeguard.check_argument_types()
+    template_tex_list = get_tex_list(template_path)
+    if template_tex_list.count(name):
+        with open(template_path + name + 'tex', 'r') as f:
+            tex_strings = f.read()
+            write_to_tex(tex_strings, src_path)
+    else:
+        raise FileNotFoundError(f"No template: {name}.tex.")
