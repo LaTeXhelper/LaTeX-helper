@@ -4,8 +4,11 @@
 #        这里用户接口和函数运行逻辑是分离的
 import argparse
 import src.TeXinit
-import src.TeXList
+import src.TeXlist
 import src.TeXtable
 
+def main():
+    print("latex helper")
+    
 if __name__ == '__main__':
-    pass
+    main()

@@ -1,8 +1,9 @@
-Folder="./LaTeX-templates"
+Folder="./LaTeX-templates/beamer"
 LaTeX_engine="xelatex" # 目前只支持xelatex
+Style="Berkeley"
 
 begin_text="
-\\documentclass[UTF8]{ctexart}\n\\usepackage{float}\n\\usepackage{capt-of}\n\\usepackage{graphicx}\n\\usepackage{subfigure}\n\\\begin{document}\n
+\\documentclass{beamer}\n\\usetheme{${Style}}\n\\usepackage{bm}\n\\usepackage{subcaption}\n\\usepackage{enumitem}\n\\usepackage{wrapfig}\n\\usepackage{blindtext}\n\\begin{document}\n
 "
 
 end_text="
@@ -16,7 +17,11 @@ fi
 cp ${Folder}/a.png a.png
 cp ${Folder}/a.jpg a.jpg
 
-for tex_file in ${Folder}/*.tex
+tex_files=`find ${Folder} -name "*.tex"`
+
+echo ${tex_files}
+
+for tex_file in ${tex_files}
 do
     base_file=$(basename -- ${tex_file})
     tmp_file=tmp/${base_file}
@@ -28,7 +33,7 @@ do
     ${LaTeX_engine} ${tmp_file} 1>/dev/null
 done
 
-rm *.log *.aux *.png *.jpg *.pdf
+rm *.log *.aux *.png *.jpg
 for file in `find . -maxdepth 1 -name "*.pdf" `
 do
     if [ ! -e "pdf/${file}" ]; then
