@@ -3,21 +3,32 @@
 # usage: 通用函数，将生成的模板内容写入对应的tex文件
 
 import os
-from typing import List
+from typing import Dict, List
 import typeguard
 
 
-# 获取所有.tex文件
-def get_tex_list(path: str) -> List:
+# 获取当前文件夹下所有的.tex文件（深度为1）
+def get_tex_list(path: str, postfix : str = '.tex') -> List:
     assert typeguard.check_argument_types()
     datanames = os.listdir(path)
     tex_list = []
     for dataname in datanames:
-        if os.path.splitext(dataname)[1] == '.tex':
+        if os.path.splitext(dataname)[1] == postfix:
             tex_list.append(dataname)
     assert typeguard.check_return_type(tex_list)
     return tex_list
 
+# 获取当前文件夹下所有的.tex文件（递归）。返回的字典中key为文件名，value为文件路径
+def get_tex_list_recursive(path: str, postfix : str = '.tex', ignore_file_list : List[str] = ['.git']) -> Dict:
+    assert typeguard.check_argument_types()
+    tex_dict = {}
+    for parent,dirnames,filenames in os.walk(path):
+        dirnames[:] = [d for d in dirnames if d not in ignore_file_list]
+        filenames[:] = [f for f in filenames if f.endswith(postfix)]
+        for filename in filenames:
+            tex_dict[filename] = os.path.join(parent,filename)
+    assert typeguard.check_return_type(tex_dict)
+    return tex_dict
 
 # 写入对应的.tex文件
 # params: tex_strings LaTeX字符串
