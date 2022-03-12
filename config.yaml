@@ -1,2 +1,8 @@
-table_style: 1 # 生成表格时的表格样式，默认为无线表(1)，2为全线表，3为三线表，4为粗三线表
-template_path: ~/.LaTeX-templates # LaTeX模板的存储位置
+table_style: 1                        # 生成表格时的表格样式，默认为无线表(1)，2为全线表，3为三线表，4为粗三线表
+template_path: ~/.LaTeX-templates     # LaTeX模板的存储位置
+windows_editor: notepad               # windows下编辑模板的文本编辑器
+linux_editor: notepad.exe             # linux下编辑模板的文本编辑器
+pdf_path: ~/.latex_helper/pdf         # 存储编译生成的pdf文件的位置
+description_json_path: ~/.latex_helper/.description_json_path # .description.json.path
+dataframe_path: ~/.latex_helper/.dataframe.csv # pandas dataframe 所在位置
+ 

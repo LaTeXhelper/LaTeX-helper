@@ -1,6 +1,7 @@
-Folder="./LaTeX-templates/beamer"
+Folder="/home/nullptr/.latexhelper"
 LaTeX_engine="xelatex" # 目前只支持xelatex
 Style="Copenhagen" # AnnArbor Antibes Bergen Berkeley Berlin Boadilla cambridgeUS Copenhagen Darmstadt default Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins Luebeck Madrid Malmoe Marburg Montpellier PaloAlto Pittsburgh Rochester Singapore Szeged Warsaw
+cd ${Folder}
 
 begin_text="
 \\documentclass{beamer}\n\\usetheme{${Style}}\n\\usepackage{bm}\n\\usepackage{subcaption}\n\\usepackage{enumitem}\n\\usepackage{wrapfig}\n\\usepackage{ulem}\\usepackage{blindtext}\n\\\begin{document}\n
@@ -18,26 +19,26 @@ if [ ! -d "pdf/${Style}" ]; then
     mkdir -p pdf/${Style}
 fi
 
-for pic_file in `find ${Folder} -name "*.png" -o -name "*.jpg"`
+for pic_file in `find . -name "*.png" -o -name "*.jpg"`
 do
     cp ${pic_file} ./
 done
 
-tex_files=`find ${Folder} -name "*.tex"`
+tex_files=`find ./LaTeX-templates/beamer -name "*.tex"`
 
 echo ${tex_files}
 
 for tex_file in ${tex_files}
 do
     base_file=$(basename -- ${tex_file})
-    if [ ! -f "pdf/${Style}/${base_file%.*}.pdf" ]; then
+    if [ ! -f "./pdf/${Style}/${base_file%.*}.pdf" ]; then
         tmp_file=tmp/${base_file}
         touch ${tmp_file}
         echo ${begin_text} >> ${tmp_file}
         cat ${tex_file} >> ${tmp_file}
         echo ${end_text} >> ${tmp_file}
         echo "generating ${base_file%.*}.pdf with style ${Style}"
-        ${LaTeX_engine} ${tmp_file} 1>/dev/null
+        ${LaTeX_engine} ${tmp_file} -file-line-error -halt-on-error -interaction=nonstopmode 1>/dev/null
     fi
 done
 
