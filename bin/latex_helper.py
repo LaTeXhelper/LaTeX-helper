@@ -4,8 +4,27 @@
 #        这里用户接口和函数运行逻辑是分离的
 import argparse
 import src.TeXinit
-import src.TeXList
+import src.TeXlist
 import src.TeXtable
 
+def main():
+    parser = argparse.ArgumentParser(description='A tool for editing LaTeX')
+    parser.add_argument('-i', '--init', default=None, metavar='FILENAME', help='generate a TeX file with your scheduled name')
+    parser.add_argument('-d', '--init_default', action='store_true', help='generate a TeX file with the default name')
+    parser.add_argument('-l', '--list', action='store_true', help='show your TeX templates')
+    parser.add_argument('-t', '--table', nargs=2, type=int, metavar=('ROW', 'COLUMN'), default=[0,0], help='create a table in your TeX work')
+    parser.add_argument('-c', '--readcsv', default=None, metavar='CSVNAME', help='transform a csv file into a table in your TeX work')
+    args=parser.parse_args()
+    if(args.init != None):
+        src.TeXinit.tex_init(args.init)
+    if(args.init_default == True):
+        src.Texinit.tex_init()
+    if(args.list == True):
+        pass
+    if(args.table != [0, 0]):
+        pass
+    if(args.readcsv != None):
+        pass
+
 if __name__ == '__main__':
-    pass
+    main()
