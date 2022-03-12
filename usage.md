@@ -28,7 +28,8 @@ $ latexhelper <template_name> # 在文件夹下的.tex文件中写入模板
 * 写入表格(因为表格是可变的，所以单独拿出来作为一个命令)
 
 ```bash
-$ latexhelper table 5 7 
+$ latexhelper table 5 7 # 生成一个5行7列的表格
+$ latexhelper table xxx.csv # 将csv文件转换为latex
 # 也可以加入更多的设置，指定表格样式等
 ```
 

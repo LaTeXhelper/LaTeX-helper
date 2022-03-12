@@ -1,0 +1,32 @@
+# coding=utf-8
+# author: Yujin Wang
+# usage: 将markdown自动转为latex
+
+from utils.fileio import *
+import os
+import re
+
+def markdown2latex(markdown_file: str,
+                   using_utf8: bool = True,
+                   using_section_number:bool = True,
+                   building_pdf: bool = False):
+    retval = os.system("pandoc -v")
+    if(retval != 0):
+        raise FileNotFoundError("You should download pandoc first. See more about pandoc: https://pandoc.org/")
+    tex_file = os.path.splitext(markdown_file)[0] + '.tex'
+    os.system(f"pandoc {markdown_file} -f markdown -t latex -s -o {tex_file}")
+    with open(tex_file) as f:
+        output = f.read()
+        if(using_utf8):
+            output = re.sub(r"\\documentclass\[\s?\]{article}",
+                        r"\\documentclass[UTF8]{ctexart}", output)
+        if(using_section_number):
+            output = re.sub(r"\\setcounter{secnumdepth}.*",
+                        r"% enable num label",output)
+    with open(tex_file,'w') as f:
+        f.write(output)
+    if(building_pdf):
+        os.system(f'xelatex {tex_file}')
+
+if __name__ == '__main__':
+    markdown2latex("/mnt/c/Users/86181/Desktop/LaTeX-helper/README.md")

@@ -40,9 +40,9 @@ $ git pull
 * Python相关
 
   * `argparse` Python用于编写命令行程序的一个库
-
-  * `re` Python处理正则表达式的一个库。因为这个项目需要大量处理文本的方法，所以我感觉大概率会用到这个库。在线测试正则表达式可以用[https://regex101.com/](https://regex101.com/)
-
+* `re` Python处理正则表达式的一个库。因为这个项目需要大量处理文本的方法，所以我感觉大概率会用到这个库。在线测试正则表达式可以用[https://regex101.com/](https://regex101.com/)
+  * `os/sys` Python与操作系统交互的两个库，例如创建文件，列举文件等。
+* `pandas` Python一个处理数据的库，公众号里宣传“Python杀死了excel”，说的多半就是它（
   * Python文件读写的相关机制
 
 * LaTeX相关

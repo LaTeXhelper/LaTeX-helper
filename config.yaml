@@ -1,0 +1,2 @@
+table_style: 1 # 生成表格时的表格样式，默认为无线表(1)，2为全线表，3为三线表，4为粗三线表
+template_path: ~/.LaTeX-templates # LaTeX模板的存储位置
