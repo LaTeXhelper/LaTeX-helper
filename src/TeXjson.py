@@ -3,7 +3,6 @@ import re
 
 from utils.fileio import *
 
-
 def generate_json(dir_path: str, json_path: str = None):
     description_path = os.path.join(os.environ['HOME'],'.latexhelper','description.json')
     file_dict = get_tex_list_recursive(dir_path)

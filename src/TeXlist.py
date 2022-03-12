@@ -18,7 +18,6 @@ pdf_list = []
 def dfs_showdir(path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'LaTeX-templates'),
                 depth: int = 0,
                 pdf_father_path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'pdf')):
-
     if platform.system() == 'Windows':
         split_symbol = '\\'
     else:
