@@ -18,13 +18,18 @@ pdf_list = []
 def dfs_showdir(path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'LaTeX-templates'),
                 depth: int = 0,
                 pdf_father_path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'pdf')):
+    # choose split symbol according to the operating system
     if platform.system() == 'Windows':
         split_symbol = '\\'
     else:
         split_symbol = '/'
+
+    # load description dict
     description_path = os.path.join(os.environ['HOME'], '.latexhelper','description.json')
     with open(description_path) as f:
         description_dict = json.load(f)
+    
+    # recursively get all the information
     for item in os.listdir(path):
         newitem = os.path.join(path, item)
         if os.path.splitext(newitem)[1] == '.tex':
@@ -39,7 +44,7 @@ def dfs_showdir(path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'La
         if os.path.isdir(newitem):
             dfs_showdir(newitem, depth + 1)
 
-
+# show all the info in pandas-Dataframe style
 def create_pd_format():
     data = {
         'document type':document_type_list,
@@ -52,6 +57,8 @@ def create_pd_format():
     print(df)
 
 
-if __name__ == '__main__':
-    dfs_showdir()
+def tex_list(path: str = os.path.join(os.environ['HOME'], '.latexhelper','LaTeX-templates'),
+             depth: int = 0,
+             pdf_father_path: str = os.path.join(os.environ['HOME'],'.latexhelper', 'pdf')):
+    dfs_showdir(path,depth,pdf_father_path)
     create_pd_format()

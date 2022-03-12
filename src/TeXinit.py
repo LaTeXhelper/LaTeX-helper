@@ -24,23 +24,26 @@ def tex_init(tex_file_name:str,
     if (tex_file_name[-4:] != '.tex'):
         tex_file_name += '.tex'
 
+    # select editor according platform
     if (platform.system() == 'Windows'):
         editor = windows_editor
     elif (platform.system() == 'Linux'):
         editor = linux_editor
 
     # TODO: add legal check
+    # choose type. The file will be saved at document_type/content_type 
     document_type = input('Please input your document type:')
     content_type = input('Please input your content type:')
-    
+
+    # generate path for the file
     if not os.path.exists(os.path.join(template_dir, document_type)):
         os.makedirs(os.path.join(template_dir, document_type))
-    if not (os.path.exists(
-            os.path.join(template_dir, document_type, content_type))):
+    if not (os.path.exists(os.path.join(template_dir, document_type, content_type))):
         os.makedirs(os.path.join(template_dir, document_type, content_type))
     print('Add your templates according to the format in the empty file:')
     tex_file_name = os.path.join(template_dir,document_type,content_type,tex_file_name)
 
+    # edit your template in editor
     if not (os.path.exists(tex_file_name)):
         with open(tex_file_name, 'w') as f:
             f.write(TEMPLATE_STRING)
