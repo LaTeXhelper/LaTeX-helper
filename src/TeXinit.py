@@ -18,7 +18,7 @@ TEMPLATE_STRING = r'''
 def tex_init(tex_file_name:str,
              windows_editor: str = 'notepad',
              linux_editor: str = 'vim',
-             template_dir: str = os.path.join(os.environ['HOME'],'.latexhelper','LaTeX-templates')) -> None:
+             template_dir: str = os.path.join( os.path.expanduser('~'),'.latexhelper','LaTeX-templates')) -> None:
     assert typeguard.check_argument_types()
     if (tex_file_name[-4:] != '.tex'):
         tex_file_name += '.tex'
@@ -52,7 +52,7 @@ def tex_init(tex_file_name:str,
     print(f'template saved in: {tex_file_full_path}')
 
     # update gererate.json for search
-    description_path = os.path.join(os.environ['HOME'], '.latexhelper','description.json')
+    description_path = os.path.join( os.path.expanduser('~'), '.latexhelper','description.json')
     with open(description_path) as f:
         description_dict = json.load(f)
     print(tex_file_name)

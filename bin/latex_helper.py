@@ -13,8 +13,7 @@ import os
 
 
 def main():
-    if platform.system() == 'Windows':
-        os.environ['HOME'] = os.environ['USERPROFILE']
+
     parser = argparse.ArgumentParser(description='A tool for editing LaTeX')
     parser.add_argument('-i',
                         '--init',
