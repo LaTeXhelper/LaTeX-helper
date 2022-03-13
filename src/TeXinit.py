@@ -55,6 +55,7 @@ def tex_init(tex_file_name:str,
     description_path = os.path.join(os.environ['HOME'], '.latexhelper','description.json')
     with open(description_path) as f:
         description_dict = json.load(f)
+    print(tex_file_name)
     description_dict[tex_file_name] = 'None'
     # generate json for vscode auto code generating
     json_str = json.dumps(description_dict)

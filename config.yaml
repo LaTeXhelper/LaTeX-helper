@@ -5,4 +5,3 @@ linux_editor: notepad.exe             # linux下编辑模板的文本编辑器
 pdf_path: ~/.latex_helper/pdf         # 存储编译生成的pdf文件的位置
 description_json_path: ~/.latex_helper/.description_json_path # .description.json.path
 dataframe_path: ~/.latex_helper/.dataframe.csv # pandas dataframe 所在位置
- 

@@ -7,9 +7,9 @@ from utils.fileio import *
 
 def tex_json(
     dir_path: str = os.path.join(os.environ['HOME'], '.latexhelper'),
-    windows_json_path: str = os.environ['HOME'] + 'AppData\\Roaming\\Code\\User\\snippets\\latex.json',
-    linux_json_path: str = '/mnt/c/Users/86181/AppData/Roaming/Code/User/snippets/latex.json'):
-    
+    windows_json_path: str = os.environ['HOME'] + '\\AppData\\Roaming\\Code\\User\\snippets\\latex.json',
+    linux_json_path: str = '.'):
+
     # get all the files
     file_dict = get_tex_list_recursive(dir_path)
 
@@ -18,6 +18,7 @@ def tex_json(
         json_path = windows_json_path
     else:
         json_path = linux_json_path
+        print('The json file will be generated in current path. You should copy it in ~\\AppData\\Roaming\\Code\\User\\snippets\\latex.json')
 
     # init settings
     description_path = os.path.join(os.environ['HOME'],'.latexhelper','description.json')
@@ -26,7 +27,7 @@ def tex_json(
 
     # generate a dictionary for every single tex file
     for file, file_path in file_dict.items():
-        with open(file_path) as f:
+        with open(file_path,encoding='utf-8') as f:
             text_data = f.read()
             description = re.match(r"%\s*description\s*:\s*(.*)\s*", text_data)
             if (description == None):
