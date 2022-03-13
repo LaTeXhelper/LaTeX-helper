@@ -40,5 +40,5 @@ def markdown2latex(markdown_file: str,
         os.system(f'{tex_interpreter} -file-line-error -halt-on-error -interaction=nonstopmode {tex_file} ')
 
 
-if __name__ == '__main__':
-    markdown2latex("/mnt/c/Users/86181/Desktop/LaTeX-helper/README.md")
+# if __name__ == '__main__':
+#     markdown2latex("/mnt/c/Users/86181/Desktop/LaTeX-helper/README.md")

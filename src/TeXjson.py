@@ -1,11 +1,23 @@
 import json
 import re
+import platform
 
 from utils.fileio import *
 
-def tex_json(dir_path: str, json_path: str = None):
+
+def tex_json(
+    dir_path: str = os.path.join(os.environ['HOME'], '.latexhelper'),
+    windows_json_path: str = os.environ['HOME'] + 'AppData\\Roaming\\Code\\User\\snippets\\latex.json',
+    linux_json_path: str = '/mnt/c/Users/86181/AppData/Roaming/Code/User/snippets/latex.json'):
+    
     # get all the files
     file_dict = get_tex_list_recursive(dir_path)
+
+    # select the json path according to the platform
+    if platform.system() == 'Windows':
+        json_path = windows_json_path
+    else:
+        json_path = linux_json_path
 
     # init settings
     description_path = os.path.join(os.environ['HOME'],'.latexhelper','description.json')
@@ -41,7 +53,7 @@ def tex_json(dir_path: str, json_path: str = None):
         f.write(describe_str)
 
 
-if __name__ == '__main__':
-    tex_json(
-        os.path.join(os.environ['HOME'],'.latexhelper'),
-        "C:/Users/86181/AppData/Roaming/Code/User/snippets/latex.json")
+# if __name__ == '__main__':
+#     tex_json(
+#         os.path.join(os.environ['HOME'],'.latexhelper'),
+#         )

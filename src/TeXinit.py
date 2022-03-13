@@ -56,7 +56,11 @@ def tex_init(tex_file_name:str,
     with open(description_path) as f:
         description_dict = json.load(f)
     description_dict[tex_file_name] = 'None'
+    # generate json for vscode auto code generating
+    json_str = json.dumps(description_dict)
+    with open(description_path, 'w') as f:
+        f.write(json_str)
 
 
-if __name__ == '__main__':
-    tex_init('calculus.tex')
+# if __name__ == '__main__':
+#     tex_init('matrix.tex')

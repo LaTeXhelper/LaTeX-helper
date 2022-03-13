@@ -15,10 +15,6 @@ def main():
                         default=None,
                         metavar='FILENAME',
                         help='generate a TeX file with your scheduled name')
-    parser.add_argument('-d',
-                        '--init_default',
-                        action='store_true',
-                        help='generate a TeX file with the default name')
     parser.add_argument('-l',
                         '--list',
                         action='store_true',
@@ -39,8 +35,6 @@ def main():
     args = parser.parse_args()
     if (args.init != None):
         src.TeXinit.tex_init(args.init)
-    if (args.init_default == True):
-        src.TeXinit.tex_add()
     if (args.list == True):
         src.TeXlist.tex_list()
     if (args.table != [0, 0]):

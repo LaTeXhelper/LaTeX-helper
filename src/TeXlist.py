@@ -61,4 +61,4 @@ def tex_list(path: str = os.path.join(os.environ['HOME'], '.latexhelper','LaTeX-
     dfs_showdir(path,depth,pdf_father_path)
     create_pd_format()
 
-tex_list()
+# tex_list()
