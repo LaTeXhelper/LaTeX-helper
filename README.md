@@ -1,6 +1,6 @@
 # latexhelper
 
-A simple tool for writing latex in vscode.
+A simple tool for writing latex in vscode. [Chinese document](https://www.wolai.com/tx-leo/afrUuns8wW44AdERsoWasC)
 
 ## requirements
 
