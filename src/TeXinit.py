@@ -5,8 +5,7 @@
 import platform
 import os
 import typeguard
-import shutil
-import re
+import json
 
 TEMPLATE_STRING = r'''
 % description:
@@ -31,7 +30,7 @@ def tex_init(tex_file_name:str,
         editor = linux_editor
 
     # TODO: add legal check
-    # choose type. The file will be saved at document_type/content_type 
+    # choose type. The file will be saved at document_type/content_type
     document_type = input('Please input your document type:')
     content_type = input('Please input your content type:')
 
@@ -41,16 +40,23 @@ def tex_init(tex_file_name:str,
     if not (os.path.exists(os.path.join(template_dir, document_type, content_type))):
         os.makedirs(os.path.join(template_dir, document_type, content_type))
     print('Add your templates according to the format in the empty file:')
-    tex_file_name = os.path.join(template_dir,document_type,content_type,tex_file_name)
+    tex_file_full_path = os.path.join(template_dir,document_type,content_type,tex_file_name)
 
     # edit your template in editor
-    if not (os.path.exists(tex_file_name)):
-        with open(tex_file_name, 'w') as f:
+    if not (os.path.exists(tex_file_full_path)):
+        with open(tex_file_full_path, 'w') as f:
             f.write(TEMPLATE_STRING)
-    retval = os.system(f'{editor} {tex_file_name}')
+    retval = os.system(f'{editor} {tex_file_full_path}')
     if (retval !=0):
         raise FileNotFoundError(f'Can\'t find {editor}. Consider use another editor!')
-    print(f'template saved in: {tex_file_name}')
+    print(f'template saved in: {tex_file_full_path}')
+
+    # update gererate.json for search
+    description_path = os.path.join(os.environ['HOME'], '.latexhelper','description.json')
+    with open(description_path) as f:
+        description_dict = json.load(f)
+    description_dict[tex_file_name] = 'None'
+
 
 if __name__ == '__main__':
     tex_init('calculus.tex')
