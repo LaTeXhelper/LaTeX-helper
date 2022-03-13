@@ -155,6 +155,11 @@ cython_debug/
 *.tex
 *.vrb
 *.out
+*.nav
+*.snm
+*.toc
+*.jpg
+*.png
 *.aux
 *.pdf
 *.json

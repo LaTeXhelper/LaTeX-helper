@@ -8,6 +8,7 @@ import src.TeXinit
 import src.TeXlist
 import src.TeXtable
 
+
 def main():
     parser = argparse.ArgumentParser(description='A tool for editing LaTeX')
     parser.add_argument('-i',

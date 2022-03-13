@@ -4,6 +4,7 @@
 
 from typing import Union
 from utils.csvreader import get_csv_list
+from utils.fileio import write_to_tex
 import typeguard
 
 BEGIN_COMMAND = r"\begin{tabular}"
@@ -21,7 +22,7 @@ MID_RULE = r'\midrule' + '\n'
 BOTTOM_RULE = r'\bottomrule' + '\n'
 
 
-def tex_table(row: int = None, column: int = None, style: Union[int, str] = 1, csv_text: str = None) -> str:
+def tex_table(row: int = None, column: int = None, style: Union[int, str] = 1, csv_text: str = None) -> None:
     # exception handling
     assert typeguard.check_argument_types()
     if (row != None and row <= 0):
@@ -120,5 +121,4 @@ def tex_table(row: int = None, column: int = None, style: Union[int, str] = 1, c
     table_string += END_COMMAND
     table_string += '\n'
 
-    assert typeguard.check_return_type(table_string)
-    return table_string
+    write_to_tex(table_string, '.')
