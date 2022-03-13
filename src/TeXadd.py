@@ -3,7 +3,11 @@ from typing import List
 import os
 
 def tex_add(name: str,
+<<<<<<< HEAD
             template_path: str = os.path.join( os.path.expanduser('~'), '.latexhelper'),
+=======
+            template_path: str = os.path.join(os.path.expanduser('~'), '.latexhelper'),
+>>>>>>> 2d11056d3269c6511ab3fc31682d764857a2999b
             src_path: str = '.'):
     assert typeguard.check_argument_types()
     template_tex_list = get_tex_list(template_path)
