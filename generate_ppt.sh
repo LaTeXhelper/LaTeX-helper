@@ -1,51 +1,48 @@
 Folder="/home/nullptr/.latexhelper"
-LaTeX_engine="xelatex" # 目前只支持xelatex
+LaTeX_engine="pdflatex" # 目前只支持pdflatex
 Style="Copenhagen" # AnnArbor Antibes Bergen Berkeley Berlin Boadilla cambridgeUS Copenhagen Darmstadt default Dresden Frankfurt Goettingen Hannover Ilmenau JuanLesPins Luebeck Madrid Malmoe Marburg Montpellier PaloAlto Pittsburgh Rochester Singapore Szeged Warsaw
 cd ${Folder}
 
 begin_text="
-\\documentclass{beamer}\n\\usetheme{${Style}}\n\\usepackage{bm}\n\\usepackage{subcaption}\n\\usepackage{enumitem}\n\\usepackage{wrapfig}\n\\usepackage{ulem}\\usepackage{blindtext}\n\\\begin{document}\n
+\\documentclass{beamer}\n
+\\usetheme{${Style}}\n
+\\usepackage{bm}\n
+\\usepackage{subcaption}\n
+\\usepackage{enumitem}\n
+\\usepackage{wrapfig}\n
+\\usepackage{ulem}
+\\usepackage{blindtext}\n
+\\\begin{document}\n
 "
 
 end_text="
 \n\\\end{document}
 "
 
-if [ ! -d "tmp" ]; then
-    mkdir -p tmp
-fi
+cd ${Folder}/LaTeX-templates/beamer
+echo "working in ${Folder}/LaTeX-templates/beamer"
 
-if [ ! -d "pdf/${Style}" ]; then
-    mkdir -p pdf/${Style}
-fi
-
-for pic_file in `find . -name "*.png" -o -name "*.jpg"`
-do
-    cp ${pic_file} ./
-done
-
-tex_files=`find ./LaTeX-templates/beamer -name "*.tex"`
-
-echo ${tex_files}
+tex_files=`find . -maxdepth 2 -name "*.tex"`
+echo "all the existing tex files: ${tex_files}"
 
 for tex_file in ${tex_files}
 do
-    base_file=$(basename -- ${tex_file})
-    if [ ! -f "./pdf/${Style}/${base_file%.*}.pdf" ]; then
-        tmp_file=tmp/${base_file}
+    tex_base_name=$(basename -- ${tex_file})
+    if [ ! -f "../../pdf/${tex_base_name%.*}.pdf" ]; then
+        tmp_file=${tex_base_name}
         touch ${tmp_file}
         echo ${begin_text} >> ${tmp_file}
         cat ${tex_file} >> ${tmp_file}
         echo ${end_text} >> ${tmp_file}
-        echo "generating ${base_file%.*}.pdf with style ${Style}"
-        ${LaTeX_engine} ${tmp_file} -file-line-error -halt-on-error -interaction=nonstopmode 1>/dev/null
+        echo "generating ${tex_base_name%.*}.pdf ..."
+        ${LaTeX_engine} -file-line-error -halt-on-error -interaction=nonstopmode ${tmp_file} 1>/dev/null
+        rm *.toc *.vrb *.aux *.log *.nav *.out *.snm *.synctex.gz *dvi *.tex
     fi
 done
 
-rm *.log *.aux *.png *.jpg *.out *.nav *.snm *.toc
 for file in `find . -maxdepth 1 -name "*.pdf" `
 do
-    mv $file ./pdf/${Style}
+    mv $file ../../pdf
 done
-rm -rf tmp
-echo "preview the pdf files in pdf//"
+
+echo "preview the pdf files in ${Folder}/pdf/"
