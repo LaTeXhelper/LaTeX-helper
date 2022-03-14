@@ -61,6 +61,8 @@ Then just run `del c:\\users\\xxx\\.conda\\envs\\latex3.8\\lib\\site-packages\\l
 
 Show help information.
 
+![help](picture/help.png)
+
 ### `latexhelper -i | --init <template name>`
 
 Generate a TeX template with your scheduled name. For example, if you want to create a template for writing Maxwell equations, you can input `latexhelper -i maxwell.tex`, then input its document type and content type for searching in the future:
