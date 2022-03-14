@@ -91,11 +91,19 @@ Which means generate a 4-rows and 5-columns table with style 2. Then the table d
 
 ![table result](picture/tex_table.png)
 
+### `latexhelper -j | --json`
 
+Generate a json file for automatic code completion in vscode using all your templates, like this:
+
+![json](picture/json.png)
+
+Then you can use your template via automatic code completion in vscode.
+
+![json_result](picture/json_result.png)
 
 > We have 4 styles: "no_lines": 1, "full_lines": 2, "three_lines": 3 "bold_three_lines": 4.
 
-### `latexhelper -c | -csvreader <csv_name> <style>`
+### `latexhelper -c | --csvreader <csv_name> <style>`
 
 Convert a .csv file to a latex table. For example, `test.csv` like this:
 
