@@ -1,6 +1,4 @@
 Folder="${HOME}/.latexhelper" # 模板仓库的工作目录
-LaTeX_engine="pdflatex" # 目前只支持pdflatex
-dvi_engine="dvipdfm"
 begin_text="
 \\documentclass{article}\n
 \\usepackage{amsfonts}\n
@@ -13,7 +11,7 @@ begin_text="
 " 
 
 end_text="
-\\\end{document}
+\n\\\end{document}
 "
 
 cd ${Folder}/LaTeX-templates/article
@@ -26,14 +24,24 @@ for tex_file in ${tex_files}
 do
     tex_base_name=$(basename -- ${tex_file})
     if [ ! -f "../../pdf/${tex_base_name%.*}.pdf" ]; then
+        cp ../../pictures/*.png .
+        cp ../../pictures/*.jpg .
         tmp_file=${tex_base_name}
         touch ${tmp_file}
         echo ${begin_text} >> ${tmp_file}
         cat ${tex_file} >> ${tmp_file}
         echo ${end_text} >> ${tmp_file}
-        echo "generating ${tex_base_name%.*}.pdf ..."
-        ${LaTeX_engine} -file-line-error -halt-on-error -interaction=nonstopmode ${tmp_file} 1>/dev/null
-        rm *.toc *.vrb *.aux *.log *.nav *.out *.snm *.synctex.gz *dvi *.tex
+        echo "\e[34m→ generating ${tex_base_name%.*}.pdf ...\e[0m"
+        xelatex -file-line-error -halt-on-error -interaction=nonstopmode ${tmp_file} 1>/dev/null
+        if [ -f "${tex_base_name%.*}.pdf" ]; then
+            echo -e "\e[32m✔ generate ${tex_base_name%.*}.pdf successfully! \e[0m"
+            mv ${tex_base_name%.*}.pdf ../../pdf/
+        else
+            echo "\e[31m✘ can not generate ${tex_base_name%.*}.pdf! \e[0m"
+        fi
+        rm -f *.*
+    else 
+        echo "\e[33m● ${tex_base_name%.*}.pdf already exists! \e[0m"
     fi
 done
 
