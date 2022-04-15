@@ -33,7 +33,6 @@ do
         cat ${tex_file} >> ${tmp_file}
         echo ${end_text} >> ${tmp_file}
         echo "\e[34m→ generating ${tex_base_name%.*}.pdf ...\e[0m"
-        cat $tmp_file
         pdflatex -file-line-error -halt-on-error -interaction=nonstopmode ${tmp_file} 1>/dev/null
         if [ -f "${tex_base_name%.*}.pdf" ]; then
             echo "\e[32m✔ generate ${tex_base_name%.*}.pdf successfully! \e[0m"

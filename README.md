@@ -48,18 +48,41 @@ $ git clone git@github.com:LaTeXhelper/LaTeX-templates.git ~/.latexhelper
 # or git clone https://github.com/LaTeXhelper/LaTeX-templates.git ~/.latexhelper
 ```
 
-Then, you can use `latexhelper`，`generate_pdf.sh`，`generate_ppt.sh` command after `conda activate latex`(or some other name you set before).
+Then, you can use `latexhelper`，`generate_pdf.sh`，`generate_ppt.sh` (on linux) or `generate_pdf.ps1`, `generate_ppt.ps1` (on windows) command after `conda activate latex`(or some other environment name you set before).
 
 **important!!** You may see this problem on Windows when installing the project:
+
 > error: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'c:\\users\\xxx\\.conda\\envs\\latex3.8\\lib\\site-packages\\latexhelper-1.0-py3.8.egg'
 
 Then just run `del c:\\users\\xxx\\.conda\\envs\\latex3.8\\lib\\site-packages\\latexhelper-1.0-py3.8.egg` in terminal, and rerun `python setup.py install`.
+
+### edit the config file
+
+The config file path is `~/.latexhelper/config.yaml`, like this:
+
+```yaml
+table_style: 1 # 默认表格样式
+windows_editor: notepad # windows平台下，创建模板使用的默认编辑器
+linux_editor: vim # linux平台下，创建模板使用的默认编辑器
+windows_json_path: None # windows平台下，生成的用户代码片段json文件的输出路径，需要用户自行添加
+linux_json_path: None # linux平台下，生成的用户代码片段json文件的输出路径，需要用户自行添加
+using_utf8: true # 在使用markdown生成latex PDF时，是否支持utf-8
+using_section_number: false # 在使用markdown生成latex PDF时，是否对标题进行标号
+tex_compiler: xelatex # 在使用markdown生成latex PDF时，使用的latex编译器
+tex_trash_files: 
+  - .aux
+  - .log
+  - .out
+  - .toc
+```
+
+The json file path is usually like this: `~\AppData\Roaming\Code\User\snippets\latex.json`
 
 ## usage
 
 ### `latexhelper -h | --help`
 
-Show help information.
+Show help information. And you can also see the template path, pdf path and config path so that you can edit them.
 
 ![help](picture/help.png)
 
@@ -101,6 +124,10 @@ Generate a json file for automatic code completion in vscode using all your temp
 
 ![json](picture/json.png)
 
+For better effect, you should **format** the json file (see [json_format](https://code.visualstudio.com/docs/languages/json)), like this:
+
+![json](picture/format.png)
+
 Then you can use your template via automatic code completion in vscode.
 
 ![json_result](picture/json_result.png)
@@ -123,22 +150,28 @@ Then the table data will be written in the .tex file under current folder.
 
 ![csv result](picture/csv.png)
 
-### PDF generating(not well supported)
+### `latexhelper -m | --md <markdown_name>` 
 
-On Linux, users can use `generate_pdf.sh` and `generate_ppt.sh` to generate preview pdfs for artile templates and beamer templates. Here is a pdf example for `maxwell.tex`:
+Convert a markdown file into a LaTeX-style with pandoc. But it is more beautiful and it can support Chinese.
+
+The `README.pdf` is generated in this method!
+
+
+### PDF generating
+
+On Windows,  users can use `generate_pdf.ps1` and `generate_ppt.ps1` to generate preview pdfs for artile templates and beamer templates you have created before. Like this:
+
+![Running on windows](picture/win.png)
+
+On Linux, users can use `generate_pdf.sh` and `generate_ppt.sh` to generate preview pdfs for artile templates and beamer templates you have created before. Like this:
+
+![Running on linux](picture/linux.png)
+
+> Warning: Not every template can generate pdf successfully. That is depend on your template content.
+
+Here is a pdf example for `maxwell.tex`:
+
 ![pdf](picture/pdf.png)
-
-## Future Plan
-
-* use `config.yaml` for default settings according to user's likehood.
-
-* convert .md file to latex-formatted pdf fluently(using `pandoc`).
-
-* Add search options for `--list` command.
-
-* optimize code structure.
-
-* ...
 
 ## Developers
 

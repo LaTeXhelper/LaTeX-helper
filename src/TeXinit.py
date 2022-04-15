@@ -33,8 +33,8 @@ def tex_init(tex_file_name:str,
 
     # TODO: add legal check
     # choose type. The file will be saved at document_type/content_type
-    document_type = input('Please input your document type:')
-    content_type = input('Please input your content type:')
+    document_type = input('[info]: Please input your document type:')
+    content_type = input('[info]: Please input your content type:')
 
     # generate path for the file
     if not os.path.exists(os.path.join(template_dir, document_type)):
