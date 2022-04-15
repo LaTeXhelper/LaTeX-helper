@@ -1,3 +1,4 @@
-typeguard
-pandas
-importlib_metadata
+typeguard 
+pandas 
+importlib_metadata 
+pyyaml
