@@ -1,6 +1,6 @@
-# coding=utf-8
-# author: Yujin Wang
-# usage: 根据用户的需求生成表格
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @usage: generate a latex table by the user's settings or from csv file
 
 from typing import Union
 from utils.csvreader import get_csv_list
@@ -23,7 +23,6 @@ BOTTOM_RULE = r'\bottomrule' + '\n'
 
 
 def tex_table(row: int = None, column: int = None, style: Union[int, str] = 1, csv_text: str = None) -> None:
-    # exception handling
     assert typeguard.check_argument_types()
     if (row != None and row <= 0):
         raise ValueError(f"Row should be positive, got {row}.")

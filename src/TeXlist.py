@@ -1,6 +1,7 @@
 # coding=utf-8
 # author: Jianwei Zhu
-# usage: 读取LaTeX-templates\\下所有的.tex模板名称，并在终端显示，类似于`pip list`
+# usage: show all the templates and their basic info in the LaTeX-templates folder
+
 from utils.fileio import *
 import os
 import json
@@ -52,13 +53,13 @@ def create_pd_format():
         'pdf': pdf_list
     }
     df = pd.DataFrame(data)
-    print(df)
+    with pd.option_context('expand_frame_repr', False, 'display.max_rows', None, 'max_colwidth',100): 
+        print(df)
+    print(f'view the pdf in {os.path.join(os.environ["HOME"], ".latexhelper", "pdf")}')
 
 
-def tex_list(path: str = os.path.join(os.environ['HOME'], '.latexhelper','LaTeX-templates'),
+def tex_list(path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'LaTeX-templates'),
              depth: int = 0,
-             pdf_father_path: str = os.path.join(os.environ['HOME'],'.latexhelper', 'pdf')):
+             pdf_father_path: str = os.path.join(os.environ['HOME'], '.latexhelper', 'pdf')):
     dfs_showdir(path,depth,pdf_father_path)
     create_pd_format()
-
-# tex_list()

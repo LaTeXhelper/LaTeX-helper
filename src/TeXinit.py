@@ -1,7 +1,7 @@
-# coding=utf-8
-# author: Jianwei Zhu
-# usage: 根据文件名称生成文件
-# 饼: 鲁棒性：如果用户输入的文件名带后缀如何处理？不带后缀如何处理？如果不输入文件名如何处理？
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# @usage: create a latex template and save it in the template directory for further use
+
 import platform
 import os
 import typeguard
@@ -9,7 +9,9 @@ import json
 
 TEMPLATE_STRING = r'''
 % description:
-% requirements(optional):
+% requirements:
+% write a brief description of your template
+% If your template needs special packages, please add them in the requirements.
 
 % Add your templates below:
 
@@ -18,7 +20,7 @@ TEMPLATE_STRING = r'''
 def tex_init(tex_file_name:str,
              windows_editor: str = 'notepad',
              linux_editor: str = 'vim',
-             template_dir: str = os.path.join( os.path.expanduser('~'),'.latexhelper','LaTeX-templates')) -> None:
+             template_dir: str = os.path.join( os.path.expanduser('~'), '.latexhelper', 'LaTeX-templates')) -> None:
     assert typeguard.check_argument_types()
     if (tex_file_name[-4:] != '.tex'):
         tex_file_name += '.tex'
@@ -36,10 +38,20 @@ def tex_init(tex_file_name:str,
 
     # generate path for the file
     if not os.path.exists(os.path.join(template_dir, document_type)):
-        os.makedirs(os.path.join(template_dir, document_type))
+        print('[Warning]: The document type does not exist. Please check your input.')
+        key = input('continue? (Y/n)')
+        if (key == 'Y' or key == 'y'):
+            os.makedir(os.path.join(template_dir, document_type))
+        else:
+            return
     if not (os.path.exists(os.path.join(template_dir, document_type, content_type))):
-        os.makedirs(os.path.join(template_dir, document_type, content_type))
-    print('Add your templates according to the format in the empty file:')
+        print('[Warning]: The content type does not exist. Please check your input.')
+        key = input('continue? (Y/n)')
+        if (key == 'Y' or key == 'y'):
+            os.makedirs(os.path.join(template_dir, document_type, content_type))
+        else:
+            return
+    print('[Info]: Add your templates according to the format in the empty file:')
     tex_file_full_path = os.path.join(template_dir,document_type,content_type,tex_file_name)
 
     # edit your template in editor
@@ -49,7 +61,7 @@ def tex_init(tex_file_name:str,
     retval = os.system(f'{editor} {tex_file_full_path}')
     if (retval !=0):
         raise FileNotFoundError(f'Can\'t find {editor}. Consider use another editor!')
-    print(f'template saved in: {tex_file_full_path}')
+    print(f'[Info]: template saved in: {tex_file_full_path}')
 
     # update gererate.json for search
     description_path = os.path.join( os.path.expanduser('~'), '.latexhelper','description.json')
@@ -57,11 +69,8 @@ def tex_init(tex_file_name:str,
         description_dict = json.load(f)
     print(tex_file_name)
     description_dict[tex_file_name] = 'None'
+
     # generate json for vscode auto code generating
     json_str = json.dumps(description_dict)
     with open(description_path, 'w') as f:
         f.write(json_str)
-
-
-# if __name__ == '__main__':
-#     tex_init('matrix.tex')
