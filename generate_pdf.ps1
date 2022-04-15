@@ -10,7 +10,6 @@ $begin_text="
 \usepackage{capt-of}
 \usepackage{graphicx}
 \usepackage{subfigure}
-\begin{document}
 " 
 
 $end_text="
@@ -42,6 +41,8 @@ foreach($tex_file in $tex_files)
         }
         new-item $tmp_file >> $null
         echo $begin_text >> $tmp_file
+        type "..\\..\\requirements_pdf.txt" >> $tmp_file
+        echo "\begin{document}" >> $tmp_file
         type $tex_file >> $tmp_file
         echo $end_text >> $tmp_file
         echo "generating $tex_base_name.pdf ..."

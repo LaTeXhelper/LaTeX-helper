@@ -1,6 +1,6 @@
 $corrent_dir=pwd
 $Folder="~\\.latexhelper"
-$LaTeX_engine="pdflatex"
+$LaTeX_engine="xelatex"
 $LaTeX_engine_options="-file-line-error -halt-on-error -synctex=1 -interaction=nonstopmode"
 $Style="Copenhagen"
 cd $Folder
@@ -14,7 +14,6 @@ $begin_text="
 \usepackage{wrapfig}
 \usepackage{ulem}
 \usepackage{blindtext}
-\begin{document}
 "
 
 $end_text="
@@ -46,6 +45,8 @@ foreach($tex_file in $tex_files)
         }
         new-item $tmp_file >> $null
         echo $begin_text >> $tmp_file
+        type "..\\..\\requirements_ppt.txt" >> $tmp_file
+        echo "\begin{document}" >> $tmp_file
         type $tex_file >> $tmp_file
         echo $end_text >> $tmp_file
         echo "generating $tex_base_name.pdf ..."
