@@ -5,13 +5,14 @@
 import os
 import re
 import typeguard
-
+from typing import List
 
 def markdown2latex(markdown_file: str,
-                   tex_interpreter: str = 'xelatex',
+                   tex_compiler: str = 'xelatex',
                    using_utf8: bool = True,
                    using_section_number: bool = True,
-                   building_pdf: bool = True) -> None:
+                   building_pdf: bool = True,
+                   tex_trash_file_list: List[str] = ['.aux','.log']  ) -> None:
 
     assert typeguard.check_argument_types()
     retval = os.system("pandoc -v")
@@ -33,10 +34,13 @@ def markdown2latex(markdown_file: str,
                             r"% enable num label", output)
     
     # generate new tex file
-    with open(tex_file, 'w',encoding='utf-8') as f:
+    with open(tex_file, 'w', encoding='utf-8') as f:
         f.write(output)
     if (building_pdf):
-        os.system(f'{tex_interpreter} -file-line-error -halt-on-error -interaction=nonstopmode {tex_file}')
+        os.system(f'{tex_compiler} -file-line-error -halt-on-error -interaction=nonstopmode {tex_file}')
+        for file_name_extension in tex_trash_file_list:
+            if(os.path.exists(os.path.splitext(markdown_file)[0] + file_name_extension)):
+                os.remove(os.path.splitext(markdown_file)[0] + file_name_extension)
         if(os.path.exists(os.path.splitext(markdown_file)[0] + '.pdf')):
             print('[Info]: PDF file generated successfully.')
         else:

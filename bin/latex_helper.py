@@ -13,6 +13,7 @@ import argparse
 import yaml
 from dataclasses import dataclass
 import os
+from typing import List
 
 @dataclass
 class Config:
@@ -21,11 +22,15 @@ class Config:
     linux_editor: str = 'vim'
     windows_json_path: str = '~\\AppData\\Roaming\\Code\\User\\snippets\\latex.json'
     linux_json_path: str = './latex.json'
+    using_utf8: bool = True
+    using_section_number: bool = True
+    tex_compiler: str = 'xelatex'
+    tex_trash_files: List[str] = ['.aux', '.log', '.out', '.toc']
 
 
 def main():
     config_path = os.path.join(os.path.expanduser('~'), '.latexhelper', 'config.yaml')
-    
+
     cfg = Config()
 
     if(os.path.exists(config_path)):
@@ -33,7 +38,10 @@ def main():
             config_dict = yaml.load(f)
             cfg.update(config_dict)
 
-    parser = argparse.ArgumentParser(description='A tool for editing LaTeX')
+    parser = argparse.ArgumentParser(
+        description=
+        f'A tool for editing LaTeX. \nTemplate path: {os.path.join(os.path.expanduser("~"), ".latexhelper")}. \nConfig path: {config_path}. \nPDF path:{os.path.join(os.path.expanduser("~"), ".latexhelper", "pdf")}. \nYou can edit the config file to change the default settings.'
+    )
     parser.add_argument('-i',
                         '--init',
                         default=None,
@@ -65,7 +73,7 @@ def main():
                         default=[None],
                         metavar=('MARKDOWNNAME'),
                         help='convert a markdown file into a TeX file which can be compiled by LaTeX beautifully')
-    
+
     args = parser.parse_args()
     helpflag = 1
     if (args.init != None):
@@ -88,7 +96,7 @@ def main():
         helpflag = 0
     if(args.md != [None]):
         print(args.md[0])
-        src.TeXmarkdown.markdown2latex(markdown_file=args.md[0])
+        src.TeXmarkdown.markdown2latex(markdown_file=args.md[0], using_utf8=cfg.using_utf8, using_section_number=cfg.using_section_number,tex_interpreter=cfg.tex_compiler)
         helpflag = 0
     if (helpflag):
         parser.parse_args(['-h'])
