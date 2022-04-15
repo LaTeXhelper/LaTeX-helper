@@ -31,8 +31,6 @@ def get_tex_list_recursive(path: str, postfix : str = '.tex', ignore_file_list :
     return tex_dict
 
 # 写入对应的.tex文件
-# params: tex_strings LaTeX字符串
-# params: path 文件夹路径
 def write_to_tex(tex_strings: str, path : str = '.'):
     assert typeguard.check_argument_types()
     tex_files = get_tex_list(path)
@@ -43,11 +41,11 @@ def write_to_tex(tex_strings: str, path : str = '.'):
         return
     elif (len(tex_files) > 1):
         print(
-            "[Warning]: There are more than one .tex files. The tex string will write to the file according to the config.yaml"
+            "[Warning]: There are more than one .tex files. The tex string will write to the tmp file tmp.tex"
         )
-        # TODO: handling the situation according to the config.yaml
+        tex_file = 'tmp.tex'
     else:
         tex_file = tex_files[0]
-        print(f"Write to {tex_file}")
-        with open(tex_file,'a+') as f:
-            f.write(tex_strings)
+    print(f"Write to {tex_file}")
+    with open(tex_file,'a+') as f:
+        f.write(tex_strings)

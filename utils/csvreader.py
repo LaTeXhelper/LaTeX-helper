@@ -20,6 +20,3 @@ def get_csv_list(csv_text: str, delimiter: str = ',') -> Tuple:
             row_num += 1
             column_list.append(column_num)
     return csv_list, row_num, column_list, max_elem_length + 1
-
-# if __name__ == '__main__':
-#     print(get_csv_list('./utils/test.csv'))
